@@ -26,9 +26,9 @@ for item in gt_data:
 # Only evaluate ids present in gt
 common_ids = set(gt_dict.keys()) & set(pred_data.keys())
 
-score = rouge_scorer.RougeScorer(['rouge1', 'rouge2', 'rougeL'], use_stemmer=True)
+score = rouge_scorer.RougeScorer(['rouge1', 'rouge2', 'rouge3'], use_stemmer=True)
 
-scores = {'rouge1': [], 'rouge2': [], 'rougeL': []}
+scores = {'rouge1': [], 'rouge2': [], 'rouge3': []}
 
 for id_ in common_ids:
     reference = gt_dict[id_]
