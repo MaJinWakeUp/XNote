@@ -26,9 +26,9 @@ def get_evidence(json_file):
 
 def main():
     # Define the directory containing the evidence files
-    search_dir = "/scratch/jin7/datasets/XCommnunityNote/gcloud_search"
+    search_dir = "/scratch/jin7/datasets/XCommunityNote/real/gcloud_search"
     # Define the output directory for the extracted evidence
-    output_dir = "/scratch/jin7/datasets/XCommnunityNote/evidence"
+    output_dir = "/scratch/jin7/datasets/XCommunityNote/real/evidence"
     os.makedirs(output_dir, exist_ok=True)
 
     # Iterate through each file in the search directory

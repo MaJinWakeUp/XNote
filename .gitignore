@@ -1,3 +1,10 @@
-DeepSeek-VL2/
-gcloud_output/
-Sniffer/
+# Ignore everything
+*
+
+# But not these files...
+!.gitignore
+!readme.md
+# etc...
+
+# ...even if they are in subdisrectories
+# !*/

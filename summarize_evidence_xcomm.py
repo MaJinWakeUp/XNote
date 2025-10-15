@@ -5,6 +5,7 @@ from tqdm import tqdm
 summarize_model_name = "google/pegasus-cnn_dailymail"  # Default PEGASUS model for summarization
 summarize_tokenizer = PegasusTokenizer.from_pretrained(summarize_model_name)
 summarize_model = PegasusForConditionalGeneration.from_pretrained(summarize_model_name)
+summarize_model = summarize_model.to("cuda")
 
 def summarize_text_with_pegasus(text, tokenizer, model, target_token_count=2048):
     """
@@ -42,7 +43,7 @@ def summarize_text_with_pegasus(text, tokenizer, model, target_token_count=2048)
     # Generate summaries for each chunk
     summaries = []
     for chunk in chunks:
-        input_chunk = chunk.unsqueeze(0)  # Add batch dimension
+        input_chunk = chunk.unsqueeze(0).to("cuda")  # Add batch dimension
         summary_ids = model.generate(input_chunk, max_length=256, min_length=30, length_penalty=2.0, num_beams=4, early_stopping=True)
         summary = tokenizer.decode(summary_ids[0], skip_special_tokens=True)
         summaries.append(summary)
@@ -62,9 +63,9 @@ def summarize_text_with_pegasus(text, tokenizer, model, target_token_count=2048)
 
 def main():
     # Define the directory containing the evidence files
-    search_dir = "/scratch/jin7/datasets/XCommnunityNote/evidence"
+    search_dir = "/scratch/jin7/datasets/XCommunityNote/real/evidence"
     # Define the output directory for the summarized evidence
-    output_dir = "/scratch/jin7/datasets/XCommnunityNote/summarized_evidence"
+    output_dir = "/scratch/jin7/datasets/XCommunityNote/real/summarized_evidence"
     os.makedirs(output_dir, exist_ok=True)
 
     # Iterate through each file in the search directory with a progress bar
@@ -78,7 +79,22 @@ def main():
             with open(input_file, "r") as f:
                 evidence_text = f.read()
 
-            summary = summarize_text_with_pegasus(evidence_text, summarize_tokenizer, summarize_model)
+            # Parse the evidence_text into individual entries
+            entries = evidence_text.strip().split("URL: ")
+            summaries = []
+
+            for entry in entries:
+                if entry.strip():  # Skip empty entries
+                    lines = entry.split("\n")
+                    url = lines[0].strip() if not lines[0].startswith("URL: ") else lines[0][5:].strip()
+                    content = " ".join(line.split(": ", 1)[1].strip() for line in lines[1:] if ": " in line)
+                    summary = summarize_text_with_pegasus(content, summarize_tokenizer, summarize_model)
+                    summary = summary.replace("<n>", " ")  # Remove newlines for better formatting
+                    summaries.append(f"URL: {url}\nSummary: {summary}")
+
+            # Combine all summaries into the final output
+            summary = "\n".join(summaries)
+            # summary = summarize_text_with_pegasus(evidence_text, summarize_tokenizer, summarize_model)
             with open(output_file, "w") as f:
                 f.write(summary)
 

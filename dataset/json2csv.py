@@ -15,7 +15,7 @@ with open(output_csv, 'w', encoding='utf-8', newline='') as csv_file:
     writer = csv.writer(csv_file)
     
     # Write the header row
-    writer.writerow(["id", "text", "date", "author_name", "retweet_count", "image_urls", "tweet_url", "community_note", "language"])
+    writer.writerow(["id", "text", "date", "author_name", "retweet_count", "image_urls", "tweet_url", "community_note", "language", "llm_class", "llm_topics"])
     
     # Write the data rows
     for item in data:
@@ -25,8 +25,10 @@ with open(output_csv, 'w', encoding='utf-8', newline='') as csv_file:
             item.get("date"),
             item.get("author_name"),
             item.get("retweet_count"),
-            ",".join(item.get("image_urls", [])),
+            ", ".join(item.get("image_urls", [])),
             item.get("tweet_url"),
             item.get("community_note", {}).get("summary"),
-            item.get("language")
+            item.get("language"),
+            item.get("llm_image_classification"),
+            "; ".join(item.get("topical_categories", []))
         ])

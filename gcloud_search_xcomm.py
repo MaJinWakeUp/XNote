@@ -1,7 +1,6 @@
 import os
 from google.cloud import vision
 import json
-from data_parser import AMMeBa
 from tqdm import tqdm
 
 def detect_web(path):
@@ -108,19 +107,20 @@ def detect_web(path):
 
 
 if __name__ == "__main__":
-    save_dir = "/scratch/jin7/datasets/XCommnunityNote/gcloud_search"
+    part = "real"
+    save_dir = f"/scratch/jin7/datasets/XCommunityNote/{part}/gcloud_search"
     os.makedirs(save_dir, exist_ok=True)
-    images_dir = "/scratch/jin7/datasets/XCommnunityNote/images"
-    json_file = "/scratch/jin7/datasets/XCommnunityNote/dataset_filtered.json"
+    images_dir = f"/scratch/jin7/datasets/XCommunityNote/{part}/images"
+    json_file = f"/scratch/jin7/datasets/XCommunityNote/{part}/final_dataset.json"
     with open(json_file, "r") as f:
         dataset = json.load(f)
 
     for idx in tqdm(range(len(dataset))):
         data = dataset[idx]
         data_id = data["id"]
-        image_urls = data["image_urls"]
+        images= data["images"]
         image_paths = []
-        for image_url in image_urls:
+        for image_url in images:
             # Check if the image URL is a local path
             if os.path.isfile(image_url):
                 image_paths.append(image_url)
