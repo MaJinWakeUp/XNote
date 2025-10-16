@@ -1,3 +1,0 @@
-# Towards Automated Context-Corrective Notes Generation for Responsible Online Social Networks
-
-This repository is still under construction...
