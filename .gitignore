@@ -4,7 +4,8 @@
 # But not these files...
 !.gitignore
 !readme.md
-# etc...
+!RAG-MAC
+!dataset
 
 # ...even if they are in subdisrectories
 # !*/
