@@ -2,7 +2,7 @@
 
 XNote is a real-world benchmark of X posts paired with Community Notes and external context, with annotations for topics and deceptive factors. This repository evaluates frontier large vision-language models (LVLMs) on two tasks: deception detection and note generation.
 
-🤗 Hugging Face dataset: [Find XNote on Hugging Face](https://huggingface.co/datasets/majinwakeup30/XNote)
+[![Hugging Face Dataset](https://img.shields.io/badge/Hugging%20Face-Dataset-yellow?logo=huggingface)](https://huggingface.co/datasets/majinwakeup30/XNote)
 
 ## Dataset: XNote
 
