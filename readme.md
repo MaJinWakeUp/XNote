@@ -1,38 +1,47 @@
-# Towards Automated Community Notes-Style Fact-Checking with VLM Agents for Combating Contextual Deception
+# XNote: Benchmarking Automated Community Notes Generation for Image-based Contextual Deception
 
-In this work, we address the gap in automated Community Notes generation for image-based contextual deception. 
-1. We introduce **XCheck**, a real-world multimodal dataset of X posts paired with ground-truth Community Notes, together with retrieved external context. 
-2. We further propose **ACCNote**, a retrieval-augmented multi-agent framework that enhances LVLMs to generate context-corrective notes. 
-3. To evaluate whether generated notes are helpful to users, we develop a new metric Context Helpfulness Score (**CHS**) that aligns with pilot user study outcomes. 
-4. Extensive experiments show that ACCNote consistently outperforms foundation LVLM baselines and naive RAG on both deception detection and note generation tasks on XCheck, and also exceeds the commercial baseline GPT5-mini.
+XNote is a real-world benchmark of X posts paired with Community Notes and external context, with annotations for topics and deceptive factors. This repository evaluates frontier large vision-language models (LVLMs) on two tasks: deception detection and note generation.
 
+🤗 Hugging Face dataset: [Find XNote on Hugging Face](https://huggingface.co/datasets/majinwakeup30/XNote)
 
-<!-- > Try our interactive demo on Google Colab:
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/*/*/blob/main/demo.ipynb) -->
+## Dataset: XNote
 
-> Try our Notebook demo here: [`demo.ipynb`](demo.ipynb)
+The **XNote** dataset is constructed in four stages:
+1. deceptive data curation
+2. non-deceptive control set addition
+3. data cleaning and annotation
+4. context augmentation via reverse image search
 
+![XCheck Dataset Construction](dataset/data_collection.png)
 
-## Dataset: XCheck
+Dataset references:
+- `dataset/readme.md`: detailed dataset description and usage notes
+- `dataset/id_only_metadata.jsonl`: core metadata file
+- `dataset/data_collection.png`: data construction pipeline figure
 
-**XCheck** dataset was constructed in four stages as: deceptive data curation, non-deceptive control set addition, data cleaning and annotation, and context augmentation via reverse image search.
+## Benchmarking LVLMs
 
-![XCheck Dataset Construction](asset/data_collection.png)
+We provide scripts for benchmarking LVLMs and GPT-5.
 
-Please check the `dataset` directory for the detailed information of **XCheck**.
+Supported `--model_name` options:
+- `gemma`
+- `internvl`
+- `llavaonevision`
+- `qwen`
+- `vila`
 
-## Method: ACCNote
+Use `--use_context` to include external context in evaluation.
 
-**ACCNote** is an automated context-corrective note generation framework that combines:
-* Retrieval-augmented generation (RAG) to improve credibility and veracity by grounding the model in external evidence; 
-* Multi-agent collaboration to improve clarity, relevance, and neutrality by filtering noisy context, separating conflicting evidence, and refining the final note.
+```bash
+python test_baseline.py --model_name gemma --use_context
+```
 
-![ACCNote Framework](asset/Overview.png)
+Evaluation scripts:
 
-Please check the `src` directory for the implementation of **ACCNote**.
+```bash
+# Deception detection
+python eval_cls.py --model_name gemma --use_context
 
-## Metric: CHS
-
-CHS is designed to better reflect the five dimensions in the Community Notes guideline: credibility, clarity, relevance, veracity, and neutrality.
-
-Please check the `src/metric` file for the implementation of **CHS**.
+# Note generation
+python eval_generation.py --model_name gemma --use_context
+```

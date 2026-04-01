@@ -1,6 +1,6 @@
-# XCheck Dataset
+# XNote Dataset
 
-To support reproducibility while respecting platform policies and copyright constraints, we release **XCheck** in a policy-compliant format containing only tweet IDs rather than redistributing raw media. Reconstructing full post content requires "hydration" via official X APIs or other compliant procedures. Any hydrated content remains subject to X's Terms of Service and the original creators' rights.
+To support reproducibility while respecting platform policies and copyright constraints, we release **XNote** in a policy-compliant format containing only tweet IDs rather than redistributing raw media. Reconstructing full post content requires "hydration" via official X APIs or other compliant procedures. Any hydrated content remains subject to X's Terms of Service and the original creators' rights.
 
 ## Data Structure
 
