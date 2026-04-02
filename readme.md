@@ -21,7 +21,7 @@ Dataset references:
 
 ## Benchmarking LVLMs
 
-We provide scripts for benchmarking LVLMs and GPT-5.
+We provide scripts for benchmarking LVLMs, all the LVLM backbones are from Hugging Face.
 
 Supported `--model_name` options:
 - `gemma`
@@ -34,6 +34,11 @@ Use `--use_context` to include external context in evaluation.
 
 ```bash
 python test_baseline.py --model_name gemma --use_context
+```
+
+Test with OpenAI GPT API, use `--reverse-search` to enable web search tool.
+```bash
+python test_gpt.py --model_name gpt-5 --reverse-search
 ```
 
 Evaluation scripts:
