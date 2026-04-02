@@ -24,11 +24,11 @@ Dataset references:
 We provide scripts for benchmarking LVLMs, all the LVLM backbones are from Hugging Face.
 
 Supported `--model_name` options:
-- `gemma`
-- `internvl`
-- `llavaonevision`
-- `qwen`
-- `vila`
+- `gemma`: google/gemma-3-4b-it
+- `internvl`: OpenGVLab/InternVL3_5-8B
+- `llavaonevision`: lmms-lab/LLaVA-OneVision-1.5-8B-Instruct
+- `qwen`: Qwen/Qwen3-VL-8B-Instruct
+- `vila`: Efficient-Large-Model/NVILA-8B
 
 Use `--use_context` to include external context in evaluation.
 
